@@ -502,7 +502,7 @@ function handleClearCarousel() {
 
 // Get image location based on event type
 function getImageLocation(eventType) {
-    let imageLocation = "./assets/images/";
+    let imageLocation = "./assets/Images/";
 
     switch (eventType) {
         case "ncaa_womens_basketball":
