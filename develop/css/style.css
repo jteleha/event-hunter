@@ -14,7 +14,7 @@ body {
 /* Style header */
 /* id needed to override Materialize defaults */
 #background {
-    background-image: url("../../assets/Images/background-img.jpg");
+    background-image: url("../../assets/images/background-img.jpg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center center;
