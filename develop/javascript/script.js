@@ -1,7 +1,7 @@
-// variable for url
+// Variable for url
 var url = "https://api.seatgeek.com/2/events?per_page=10&listing_count.gt=0&client_id=MzkwMDkzNjl8MTcwMjk1Mzk0My43ODAyNDM5";
 
-// setting elements as variables
+// Setting elements as variables
 var btn = $("#submit-btn");
 var mainArea = $("#main-info");
 var eventCard = $(".event-card");
@@ -24,11 +24,13 @@ const maxCarouselLength = 5;
 // Store data for recently viewed events
 let recentlyViewed = [];
 
-//var for current day date
+// Var for current day date
 var today = dayjs().format("YYYY-MM-DD");
 
 // Page number of the event results
 var pageNumber = 1
+
+
 
 // Event listeners and function calls:
 // Submit listener
@@ -46,8 +48,10 @@ $(document).on("click", "#next-page", nextPageFunction)
 // Initialization function
 init();
 
-// variable for URL to update
+// Variable for URL to update
 var currentUrl = url;
+
+
 
 // Function definitions:
 // Initialize the page
@@ -66,23 +70,23 @@ function handleSubmit(event) {
         event.preventDefault();
     }
     
-    // resets url so old inputs don't add onto the new one
+    // Resets url so old inputs don't add onto the new one
     var url = "https://api.seatgeek.com/2/events?per_page=10&listing_count.gt=0&client_id=MzkwMDkzNjl8MTcwMjk1Mzk0My43ODAyNDM5";
     
     // Clear old error message, if it exists
     clearErrorMessage();
 
-    // selects the values of the inputs
+    // Selects the values of the inputs
     var userEvent = $("#event-option").val();
     var startDate = $("#start-date").val();
     var endDate = $("#end-date").val();
     var cityName = $("#city-name").val();
     var stateName = $("#state-name").val();
     
-    // adds to the url if user selected an event
+    // Adds to the url if user selected an event
     if (userEvent !== null){
 
-        // needs to get changed just for api use
+        // Needs to get changed just for API use
         if(userEvent === "NCAA BB"){
             userEvent = "ncaa_basketball";
         };
@@ -115,26 +119,26 @@ function handleSubmit(event) {
     
     };
 
-    // adds to the url if the user selected dates
+    // Adds to the url if the user selected dates
     if (startDate !== "" && endDate !== ""){
-        // error msg if user made the end date before the start date
+        // Error msg if user made the end date before the start date
         if(startDate > endDate){
             displayErrorMessage("Please Make Sure The End Date Is After The Start Date!");
             return;
         }else if(startDate === endDate){
-            // error msg if user made both dates the same day
+            // Error msg if user made both dates the same day
             displayErrorMessage("Please Make Sure The End Date Is At Least One Day After The Start Date!");
             return;
         }
         url += `&datetime_local.gte=${startDate}&datetime_local.lte=${endDate}`;
 
-    // if user only selects a start date and not end date
+    // If user only selects a start date and not end date
     }else if(startDate !== "" && endDate === ""){
         url += `&datetime_local.gte=${startDate}`
     
-    // if user only selects an end date    
+    // If user only selects an end date    
     }else if (startDate === "" && endDate !== ""){
-        //error msg if end date is before todays date
+        // Error msg if end date is before todays date
         if(endDate < today){
             displayErrorMessage("Please Make Sure The End Date Is After The Current Date!");
             return;
@@ -142,14 +146,14 @@ function handleSubmit(event) {
         url += `&datetime_local.lte=${endDate}`
     };
 
-    // adds to the url if the user selected a city
+    // Adds to the URL if the user selected a city
     if(cityName !== ""){
         url += `&venue.city=${cityName}`;
     };
 
-    // adds to the url if the user selected a state
+    // Adds to the URL if the user selected a state
     if(stateName !== ""){
-        // error mesg if user didn't enter the state abbr correct
+        // Error mesg if user didn't enter the state abbr correct
         if(stateName.length !== 2){
             displayErrorMessage("Please Make Sure The State Abbreviation Is The Correct Length!");
             return;
@@ -178,12 +182,12 @@ function isValidStateAbbr(stateAbbr) {
     return validAbbrList.includes(stateAbbr);
 }
 
-//Empty search bar when X is clicked
+// Empty search bar when X is clicked
 function emptySearch(){
     $("#search").val("");
 }
 
-//Empty the form when clear button is clicked
+// Empty the form when clear button is clicked
 function emptyForm(){
     var filters = $(".user-input")
     console.log(filters)
@@ -203,23 +207,22 @@ function handleSearch(event){
     // Clear existing error message
     clearErrorMessage();
 
-    //Comes back different based on if they used auto complete or manuelly submitted
+    // Comes back different based on if they used auto complete or manuelly submitted
     if(event !== undefined){
         event.preventDefault()
     }
-    //gets value from search
+    // Gets value from search
     searchVal = $("#search").val()
     if(searchVal.includes(" ")){
         searchVal = searchVal.split(" ").join("-");
     }
-    //resets url from previous searches
+    // Resets URL from previous searches
     var url = "https://api.seatgeek.com/2/events?per_page=10&listing_count.gt=0&client_id=MzkwMDkzNjl8MTcwMjk1Mzk0My43ODAyNDM5";
 
-    //applies the api argument
+    // Applies the API argument
     url += `&performers.slug=${searchVal}`;
 
-
-    //calls function to display events
+    // Calls function to display events
     fetchEvents(url);
 
 }
@@ -244,7 +247,7 @@ function displayEvents(data) {
     // Stores all events into variable
     var allEvents = data.events;
 
-    // error for if there isn't any events found
+    // Error for if there isn't any events found
     if(allEvents.length === 0){
         displayErrorMessage("No results found");
         return;
@@ -254,7 +257,7 @@ function displayEvents(data) {
 
     // Creates each card and applies all the info
     for (var i = 0; i < allEvents.length; i++){
-        //Make the card
+        // Make the card
         var eventCard = $("<div>");
         eventCard.addClass("event-card card ");
 
@@ -299,7 +302,7 @@ function displayEvents(data) {
         description.addClass("description");
         $(details).append(description);
 
-        // event type
+        // Event type
         var type = $("<p>");
         type.addClass("event-type");
 
@@ -308,20 +311,20 @@ function displayEvents(data) {
 
         if(typeName.includes("_")){
             splitWords = typeName.split("_");
-            // loops over each words and capitalizes the first letter
+            // Loops over each words and capitalizes the first letter
             for (var t = 0; t < splitWords.length; t++) {
                 splitWords[t] = splitWords[t].charAt(0).toUpperCase() + splitWords[t].slice(1);
             }
-            //joins the words together
+            // Joins the words together
             typeName = splitWords.join(' ');
             type.text(typeName);
 
-        //if event name is three letters wrong like MLB, NBA, MLS then all letters are capital
+        // If event name is three letters wrong like MLB, NBA, MLS then all letters are capital
         }else if(typeName.length === 3){
             typeName = typeName.toUpperCase()
             type.text(typeName);
         
-        //Everything else only capitalizes the first letter of the first word                
+        // Everything else only capitalizes the first letter of the first word                
         }else {
             typeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
             type.text(typeName);
@@ -348,7 +351,7 @@ function displayEvents(data) {
         ticketPrice.addClass("ticket-price");
         $(details).append(ticketPrice);
 
-        // anchor that contains the link and says the actual price
+        // Anchor that contains the link and says the actual price
         var minPrice = $("<a>");
         minPrice.addClass("min-price");
         minPrice.attr({"target": "_blank", "href": allEvents[i].url});
