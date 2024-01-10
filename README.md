@@ -17,7 +17,7 @@ Our group was tasked with creating a real-world front-end application using the 
 * Allows users to view next and previous pages of events 
 
 ## Screenshot
-![image](./assets/images/screenshot.png)
+![image](./assets/Images/screenshot.png)
 
 ## Link to Deployed Application
 * http://jteleha.github.io/event-hunter
