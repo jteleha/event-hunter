@@ -206,6 +206,7 @@ function emptyForm(){
 function handleSearch(event){
     // Clear existing error message
     clearErrorMessage();
+    pageNumber = 1
 
     // Comes back different based on if they used auto complete or manuelly submitted
     if(event !== undefined){
@@ -221,6 +222,9 @@ function handleSearch(event){
 
     // Applies the API argument
     url += `&performers.slug=${searchVal}`;
+
+    currentUrl = url;
+
 
     // Calls function to display events
     fetchEvents(url);
